@@ -1,0 +1,32 @@
+<html>
+<head>
+<script>
+function stdn_graph_insert(json){
+      var usage = json["ElectricPowerUsage"]["Usage"]["$"];;
+      var capacity = json["ElectricPowerUsage"]["Capacity"]["$"];
+      var hour = json["ElectricPowerUsage"]["Hour"];
+      var rate = Math.ceil(usage / capacity * 100);
+      document.getElementById('stdn').src
+        = 'http://chart.apis.google.com/chart?chxt=x&chbh=a,4,5&chs=225x69'
+                      + '&cht=bhs&chco=FFCC33,FF0000&chd=t:' + rate  + '|' + (100 - rate)
+                          + '&chtt=%E6%9D%B1%E4%BA%AC%E9%9B%BB%E5%8A%9B%E4%BD%BF%E7%94%A8%E7%8A%B6%E6%B3%81'
+                              + hour + '%E6%99%82%E5%8F%B0&chts=676767,14.5';
+};
+
+function djson() {
+      var script = document.createElement('script');
+      var appid = 'Your App ID';
+      var apiurl = 'http://setsuden.yahooapis.jp/v1/Setsuden/latestPowerUsage'
+            + '?appid=' + appid + '&output=json&callback=stdn_graph_insert';
+      script.id = apiurl;
+      script.charset = 'UTF-8';
+      script.src = script.id;
+      document.lastChild.appendChild(script);
+};
+</script>
+</head>
+<body onload="javascript:djson();">
+<img src="" id="stdn" name="stdn">
+</body>
+</html>
+
